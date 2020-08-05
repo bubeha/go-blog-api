@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/go/Dockerfile
+    volumes:
+      - ./storage/logs:/var/log/app
+    ports:
+      - '8080:8000'
+    networks:
+      - backend
+
+  postgres:
+    image: postgres:11.2-alpine
+    environment:
+      PGDATA: /data/postgres
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: app
+    volumes:
+      - ./storage/postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
