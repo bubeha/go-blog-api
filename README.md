@@ -1,1 +1,1 @@
-echo # go-blog-api
+# go-blog-api
